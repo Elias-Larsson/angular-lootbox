@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonComponent } from './components/button/button.component';
+import { User } from './types';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +12,15 @@ import { ButtonComponent } from './components/button/button.component';
 })
 export class AppComponent {
   title = 'angular-lootbox';
+    users: User[] = [];
+  
+    constructor(private UserService: UserService) {}
+  
+    ngOnInit(): void {    
+    this.UserService.getUsers().subscribe(data => {
+      console.log(data);
+          this.users = data;
+      });
+    }
 }
   
