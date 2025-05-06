@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
      <a
-          href="#"
+          routerLink="/login"
           class="inline-block text-center no-underline bg-primary rounded-2xl py-4 px-12 text-2xl"
           >Open</a
         >

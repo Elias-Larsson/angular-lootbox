@@ -14,4 +14,12 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiURL);
   }
+
+  createUser(user: User): Observable<User> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<User>(this.apiURL, user, { headers });
+  }
+
+
+
 }
