@@ -6,7 +6,7 @@ import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
-  imports: [ButtonComponent, RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-button',
-  imports: [],
+  imports: [RouterLink],
   template: `
      <a
-          routerLink="/login"
+      [routerLink]="link()"
           class="inline-block text-center no-underline bg-primary rounded-2xl py-4 px-12 text-2xl"
-          >Open</a
-        >
-        <p class="text-center text-2xl mt-4">Button</p>
+          >{{ button_name() }}</a>
   `,
 })
 export class ButtonComponent {
 
+    link = input.required<string>();
+  
+  button_name = input.required<string>();
 }

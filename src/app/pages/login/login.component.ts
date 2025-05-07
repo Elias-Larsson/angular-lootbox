@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ButtonComponent, RouterLink],
+  imports: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
