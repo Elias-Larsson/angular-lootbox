@@ -9,8 +9,8 @@ import { RouterLink } from '@angular/router';
     <nav class="flex m-0 flex-row items-center justify-between bg-background py-2 px-2 w-full">
       <a routerLink="/">
       <div class="flex flex-row text-white items-center p-2">
-        <img src="/lootbox logo1.svg" alt="lootbox logo">
-        <h1 class="text-3xl pl-6 font-semibold">LOOTBOX KILLA</h1>
+        <img src="/lootbox logo1.svg" alt="lootbox logo" class="w-12 h-12">
+        <h1 class="text-2xl pl-6 font-semibold">LOOTBOX KILLA</h1>
       </div>
       </a>
       <a
