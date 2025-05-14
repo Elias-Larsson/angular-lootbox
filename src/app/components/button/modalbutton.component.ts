@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-modalbutton',
-  imports: [RouterLink],
+  imports: [ReactiveFormsModule],
   template: `
     <button
       (click)="toggleModal()"
@@ -25,26 +26,26 @@ import { RouterLink } from '@angular/router';
         >
           Close
         </button>
-        <form id="formEdit" class="flex flex-col justify-center items-center">
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center items-center">
           <h1 class="text-2xl">Edit profile</h1>
           <input
             class="bg-accent-light m-4 px-8 py-2 rounded"
             type="text"
-            id="name"
+            formControlName="name"
             placeholder="Name"
             required
           >
           <input
             class="bg-accent-light m-4 px-8 py-2 rounded"
             type="email"
-            id="email"
+            formControlName="email"
             placeholder="Email"
             required
           >
           <input
             class="bg-accent-light m-4 px-8 py-2 rounded"
             type="password"
-            id="password"
+            formControlName="password"
             placeholder="Password"
             required
           >
@@ -52,15 +53,13 @@ import { RouterLink } from '@angular/router';
             <button
               class="inline-block text-center no-underline bg-primary rounded-2xl py-2 m-1 w-full"
               type="submit"
-              id="updateProfile"
             >
               Update profile
             </button>
             <button
               class="inline-block text-center no-underline bg-red-500 rounded-2xl py-1 m-1 w-full"
               type="button"
-              id="deleteProfile"
-            >
+              >
               Delete profile
             </button>
           </div>
@@ -71,13 +70,48 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class ModalButtonComponent {
-    showModal=false;
+    constructor(private UserService: UserService, private Router: Router) {}
+    showModal = false;
     button_name = input.required<string>();
+    updateForm: FormGroup = new FormGroup({
+        email: new FormControl(''),
+        name: new FormControl(''),
+        password: new FormControl(''),
+    });
+
     toggleModal() {
         this.showModal = !this.showModal;
-      }
-    
-      closeModal() {
+    }
+
+    closeModal() {
         this.showModal = false;
-      }
+    }
+
+    onSubmit() {
+        const credentials = this.updateForm.value;
+        const accessToken = localStorage.getItem('access_token'); 
+
+        if (!accessToken) {
+            console.error('No access token found in localStorage');
+            return;
+        }
+
+        console.log('Access Token:', accessToken);
+        console.log('Credentials:', credentials);
+
+        this.UserService.updateProfile(credentials, accessToken).subscribe({
+            next: (response) => {
+                if (response) {
+                    console.log('Profile updated successfully:', response);
+                    this.Router.navigate(['/']);
+                } else {
+                    console.error('Update failed: No user data received');
+                }
+            },
+            error: (err) => {
+                console.error('Update failed:', err);
+            },
+        });
+    }
+  
 }

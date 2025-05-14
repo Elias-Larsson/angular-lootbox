@@ -19,6 +19,12 @@ export class UserService {
   }
 
   register(credentials: {email: string, name: string, password: string}): Observable<{user: User}> {
-    return this.http.post<{user: User}>(`${this.apiURL}/profile`, credentials);
-    }
+  return this.http.post<{user: User}>(`${this.apiURL}/profile`, credentials);
+  }
+  
+  updateProfile(credentials: {name: string, email: string, password: string}, accessToken: string): Observable<{user: User}> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    return this.http.put<{user: User}>(`${this.apiURL}/profile`, credentials, { headers });
 }
+}
+
