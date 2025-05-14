@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
       (click)="toggleModal()"
       class="inline-block text-center no-underline bg-primary rounded-2xl py-4 px-12 text-2xl"
     >
-      {{ button_name() }}
+      {{ button_name }}
     </button>
     @if (showModal) {
     <div
@@ -77,7 +77,7 @@ import { Router } from '@angular/router';
 export class ModalButtonComponent {
   constructor(private UserService: UserService, private Router: Router) {}
   showModal = false;
-  button_name = input.required<string>();
+  @Input() button_name!: string;
 
   updateForm: FormGroup = new FormGroup({
     email: new FormControl(''),
