@@ -13,7 +13,6 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class ButtonComponent {
-
   link = input.required<string>();
   button_name = input.required<string>();
 }

@@ -8,7 +8,7 @@ import { UserService } from '../../services/user.service';
   selector: 'app-login',
   imports:[RouterLink, NavbarComponent, ReactiveFormsModule],
   template: `
-  <div class="flex items-center flex-col bg-background-light">
+  <div class="flex items-center flex-col bg-background">
 
   <app-navbar link="/login" button_name="Login" class="w-full"></app-navbar>
   <div

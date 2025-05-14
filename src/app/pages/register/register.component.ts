@@ -59,27 +59,27 @@ import { UserService } from '../../services/user.service';
 export class RegisterComponent {
   constructor(private UserService: UserService, private router: Router) {}
   
-      registerForm: FormGroup = new FormGroup({
-        email: new FormControl(''),
-        name: new FormControl(''),
-        password: new FormControl(''),
-    })
+  registerForm: FormGroup = new FormGroup({
+    email: new FormControl(''),
+    name: new FormControl(''),
+    password: new FormControl(''),
+  })
   
-    onSubmit() {
-      const credentials = this.registerForm.value;
+  onSubmit() {
+    const credentials = this.registerForm.value;
 
-      this.UserService.register(credentials).subscribe({
-        next: response => {
-          if (response) {
-            console.log(response);
-            this.router.navigate(['/login']);
-          } else {
-            console.error('Registration failed');
-          }
-        },
-        error: (err) => {
-          console.error('Registration failed:', err);
+    this.UserService.register(credentials).subscribe({
+      next: response => {
+        if (response) {
+          console.log(response);
+          this.router.navigate(['/login']);
+        } else {
+          console.error('Registration failed');
         }
-      })
-    }
+      },
+      error: (err) => {
+        console.error('Registration failed:', err);
+      }
+    })
+  }
 }
