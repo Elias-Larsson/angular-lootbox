@@ -22,6 +22,11 @@ export class UserService {
   return this.http.post<{user: User}>(`${this.apiURL}/profile`, credentials);
   }
   
+  deleteProfile(accessToken: string): Observable<{user: User}> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    return this.http.delete<{user: User}>(`${this.apiURL}/profile`, { headers });
+  }
+
   updateProfile(credentials: {name: string, email: string, password: string}, accessToken: string): Observable<{user: User}> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
     return this.http.put<{user: User}>(`${this.apiURL}/profile`, credentials, { headers });
