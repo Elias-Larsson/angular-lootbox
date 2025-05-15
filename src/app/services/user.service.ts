@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })  
 export class UserService {
-  private apiURL =`http://localhost:3001/api`;
+  // private apiURL =`http://localhost:3001/api`;
+  private apiURL =`https://restfulapi-aqov.onrender.com/api`;
   
   constructor(private http: HttpClient) {  }
 
