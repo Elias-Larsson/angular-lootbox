@@ -11,15 +11,5 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
   title = 'angular-lootbox';
-  users: User[] = [];
-
-  constructor(private UserService: UserService) {}
-
-  ngOnInit(): void {    
-  this.UserService.getUsers().subscribe(data => {
-    console.log(data);
-    this.users = data;
-    });
-  }
 }
   
