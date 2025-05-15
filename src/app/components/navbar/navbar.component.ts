@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ButtonComponent, RouterLink],
+  imports: [RouterLink],
   template: `
     <nav class="flex m-0 flex-row items-center justify-between bg-background py-2 px-2 w-full">
       <a routerLink="/">
