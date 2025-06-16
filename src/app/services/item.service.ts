@@ -7,7 +7,7 @@ import { Item } from '../types';
   providedIn: 'root'
 })
 export class ItemService {
-  private apiURL =`http://localhost:3001/api`;
+  private apiURL =`https://restfulapi-aqov.onrender.com/api`;
 
   constructor(private http: HttpClient) {}
 
