@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { UserService } from '../../services/user.service';
-import { User } from '../../types';
 import { ActivatedRoute } from '@angular/router';
-import { ModalButtonComponent } from '../../components/button/modalbutton.component';
+import { UserService } from '../../services/user.service';
+import { ItemService } from '../../services/item.service';
+import { User, Item } from '../../types';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { ModalButtonComponent } from "../../components/button/modalbutton.component";
+
 @Component({
   selector: 'app-userprofile',
+  standalone: true,
   imports: [NavbarComponent, ModalButtonComponent],
   template: `
     <div class="flex items-center flex-col bg-background w-screen">
@@ -15,8 +18,8 @@ import { ModalButtonComponent } from '../../components/button/modalbutton.compon
           class="bg-background flex flex-col items-center mt-16 p-4 rounded-3xl text-white w-96"
         >
           <h1 class="text-3xl py-4">
-            @if(user.name) {
-              {{ user.name }}
+            @if(user?.name) {
+              {{ user?.name }}
             } @else {
               profile
             }
@@ -32,33 +35,46 @@ import { ModalButtonComponent } from '../../components/button/modalbutton.compon
           </div>
           <app-modalbutton button_name="Edit Profile"></app-modalbutton>
         </div>
+         <div>
+      @if (userItems.length > 0) {
+        <ul class="bg-accent-light m-4 p-4 rounded">
+          @for (item of userItems; track item._id) {
+            <li>
+              {{ item.itemName }} - Value: {{ item.value }}
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-white">You have no items.</p>
+      }
+    </div>
       </main>
     </div>
   `,
 })
-export class UserByIdComponent implements OnInit {
-  user: User = {} as User;
+export class UserProfileComponent implements OnInit {
+  user: User | null = null;
+  userItems: Item[] = [];
 
-  constructor(private UserService: UserService, private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private itemService: ItemService
+  ) {}
 
   ngOnInit(): void {
-    const params = this.route.snapshot.paramMap.get('_id');
+    const userId = this.route.snapshot.paramMap.get('_id');
+    if (!userId) return;
 
-    if (!params) {
-      console.error('No user ID provided');
-      return;
-    }
-
-    console.log('params: ', params);
-
-    this.UserService.getUserById(params).subscribe({
-      next: (response) => {
-        this.user = response;
-        console.log(this.user);
-      },
-      error: (error) => {
-        console.error('Error fetching user:', error);
-      },
+    this.userService.getUserById(userId).subscribe((user: User) => {
+      this.user = user;
+      if (user.ownedItems && user.ownedItems.length > 0) {
+        this.itemService.getItems().subscribe((items: Item[]) => {
+          this.userItems = items.filter(item =>
+            user.ownedItems.includes(item._id)
+          );
+        });
+      }
     });
   }
 }

@@ -1,5 +1,4 @@
 import { Component, input } from '@angular/core';
-import { ButtonComponent } from '../button/button.component';
 import { RouterLink } from '@angular/router';
 
 @Component({
